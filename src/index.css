@@ -4,16 +4,22 @@
 }
 
 body {
-  background-color: #ededed;
+  background: url('background.png') no-repeat 50% 50% fixed;
+  background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
 }
 
 header {
   text-align: center;
 }
 
+
 #banner {
-  background-color: #d3d3d3;
-  height: 10em;
+  background: #59B7C6;
+  box-shadow: 0 6px 4px 0 rgba(151,147,147,0.50);
+  height: 12em;
   padding: 8px;
   margin-bottom: 5%;
   width: 100%;
@@ -21,11 +27,6 @@ header {
 
 form {
   width: 50%;
-}
-
-section {
-  float: left;
-  width: 55%;
 }
 
 #search-engine {
@@ -39,12 +40,14 @@ section {
 }
 
 #search-engine form input {
-  background: transparent;
-  border: 0;
-  border-bottom: 2px solid #7e7e7e;
-  outline: 0;
-  margin-bottom: 1em;
-  width: 100%;
+opacity: 0.3;
+background: #FFFFFF;
+font-family: 'Lota', serif;
+font-size: 18px;
+color: #033C45;
+letter-spacing: 0.18px;
+margin-bottom: 1em;
+width: 100%;
 }
 
 #search-engine ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -61,11 +64,13 @@ section {
 }
 
 #login-register {
+  float: left;
   width: 40%;
 }
 
 #login-register form {
   display: inline-block;
+  font-family: 'Lota', serif;
   float: right;
   margin-top: 10px;
   text-align: right;
@@ -73,26 +78,40 @@ section {
 }
 
 #login-register input {
+  font-family: 'Lota', serif;
   padding: 5px;
   width: 33%;
 }
 
 #login-register input[type=text] {
-  background-color: #E5E4E2;
+  background-color: #ffffff;
+  font-family: 'Lota', serif;
+  color: #4A4A4A;
   border: none;
   margin-bottom: .5em;
   margin-right: 3px;
 }
 
 #login-register input[type=submit] {
-  background-color: white;
+  background: #FF52A5;
+  font-family: 'Lota', serif;
+    color: #ffffff;
+  letter-spacing: 0.25px;
   border: none;
   margin-bottom: 5%;
   width: auto;
 }
 
-article {
-  background-color: #E5E4E2;
+#list {
+  float: left;
+  width: 55%;
+}
+
+#list article {
+  background: #FFFFFF;
+box-shadow: 5px 3px 5px 0 rgba(137,137,137,0.50);
+font-family: 'Arvo', serif;
+color: #4A4A4A;
   clear: both;
   height: auto;
   margin: 3% 5%;
@@ -100,17 +119,34 @@ article {
   padding: 2%;
 }
 
-article h3 {
+#list article h3 {
+  font-size: 36px;
+  font-family: 'Arvo', serif;
+  color: #4A4A4A;
   display: inline;
 }
 
-article p {
-  float: left;
-  width: 70%;
+#list article p {
+ font-size: 18px;
+ font-family: 'Lota', serif;
+ color: #4A4A4A;
+ float: left;
+ width: 70%;
 }
 
-article address {
+#list article address {
+  font-size: 18px;
+  font-family: 'Lota', serif;
+  color: #4A4A4A;
   float: right;
   padding-top: 1%;
   width: 25%;
+}
+
+#map {
+  height: 100%;
+  margin: auto;
+  padding: 8px;
+  text-align: center;
+  overflow: hidden;
 }

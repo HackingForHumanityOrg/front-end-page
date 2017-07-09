@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Gmaps, Marker, InfoWindow, Circle} from 'react-gmaps';
 
 class LocationList extends Component {
   constructor(props) {
@@ -9,11 +10,18 @@ class LocationList extends Component {
       time: '',
       email: '',
       password: '',
-      list: []
+      list: [],
+      request_data: '',
+      request: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRequest = this.handleRequest.bind(this);
+  }
+
+  componentWillMount() {
+    document.body.style.background = "white";
   }
 
   componentDidMount() {
@@ -45,16 +53,18 @@ class LocationList extends Component {
     event.preventDefault();
   }
 
-  handleRequest(event) {
-    alert(event);
-    event.preventDefault();
+  handleRequest(value) {
+    this.setState({
+      request_data: value,
+      request: true
+    });
   }
 
   render() {
     // variable holding the location list
     const lists = this.state.list.map((item, i) => {
       return (
-        <article key={i} onClick={this.handleRequest}>
+        <article key={i} onClick={()=>this.handleRequest(item)} value={item}>
           <h3>{item.facility_name}</h3>
           <p>{item.facility_type} | {item.services}</p>
           <address>
@@ -84,10 +94,88 @@ class LocationList extends Component {
             </form>
           </section>
         </div>
-        <section>{ lists }</section>
+        <section id="list">{ lists }</section>
+        <section id="map"><GoogleMap coordinates={this.state.request_data} /></section>
       </main>
     );
   }
 }
+
+  // getCoord(props) {
+  //   if(props) {
+  //     alert(props);
+  //     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address={props.location_address},+{props.location_city},+CA&key=AIzaSyAxlxK_wU7C93Kmi3MVfMmKK-B-Y1j4VtQ`, {
+  //       method: 'GET',
+  //     }).then(res => {
+  //       return res.json()
+  //     }).then (data => {
+  //       this.setState({coord: data})
+  //     }).catch(e => {
+  //       this.setState({coord: 'Request Failed: ' + e})
+  //     });
+  //   }
+  // }
+
+const coords = {
+  lat: 37.679778,
+  lng: -122.474415
+};
+const params = {v: '3.exp', key: 'AIzaSyD59dtHfFywOZus15LH00c45khguXs99nM'};
+class GoogleMap extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  onMapCreated(map) {
+    map.setOptions({
+      disableDefaultUI: true
+    });
+  }
+  onDragEnd(e) {
+    console.log('onDragEnd', e);
+  }
+  onCloseClick() {
+    console.log('onCloseClick');
+  }
+  onClick(e) {
+    console.log('onClick', e);
+  }
+  render() {
+    console.log(this.props);
+    return (
+      <Gmaps
+        width={'400px'}
+        height={'500px'}
+        lat={coords.lat}
+        lng={coords.lng}
+        zoom={12}
+        loadingMessage={'Loading map...'}
+        params={params}
+        onMapCreated={this.onMapCreated}>
+        <Marker
+          lat={coords.lat}
+          lng={coords.lng}
+          draggable={true}
+          onDragEnd={this.onDragEnd} />
+        <InfoWindow
+          lat={coords.lat}
+          lng={coords.lng}
+          content={this.props.coordinates.facility_name || "Free Clinic"}
+          onCloseClick={this.onCloseClick} />
+        <Circle
+          lat={coords.lat}
+          lng={coords.lng}
+          radius={500}
+          onClick={this.onClick} />
+      </Gmaps>
+    );
+  }
+}
+
+GoogleMap.defaultProps = {
+  coordinates: {
+    facility_name: "Free Clinic",
+  }
+};
 
 export default LocationList;

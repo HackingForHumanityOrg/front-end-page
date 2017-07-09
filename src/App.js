@@ -22,19 +22,16 @@ class App extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.setState({submitted: true});
-
   }
 
   render() {
     if (this.state.submitted) {
       return (
-        <main>
-          <LocationList address={this.state.value} />
-        </main>
+        <LocationList address={this.state.value} />
       );
     } else {
       return (
-        <main>
+        <main id="front">
           <header>
             <h2>Wellness For All</h2>
             <p>Find a women's health service near you!</p>
