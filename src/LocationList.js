@@ -33,7 +33,11 @@ class LocationList extends Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({
+      address: event.target.address,
+      service: event.target.service,
+      time: event.target.time,
+    });
   }
 
   handleSubmit(event) {
