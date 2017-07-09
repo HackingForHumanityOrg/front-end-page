@@ -41,11 +41,16 @@ class LocationList extends Component {
     event.preventDefault();
   }
 
+  handleRequest(event) {
+    alert(event);
+    event.preventDefault();
+  }
+
   render() {
     // variable holding the location list
     const lists = this.state.list.map((item, i) => {
       return (
-        <article key={i}>
+        <article key={i} onClick={this.handleRequest}>
           <h3>{item.facility_name}</h3>
           <p>{item.facility_type} | {item.services}</p>
           <address>
