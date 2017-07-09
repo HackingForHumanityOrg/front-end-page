@@ -1,0 +1,16 @@
+header {
+  text-align: center;
+}
+
+form {
+  width: 50%;
+}
+
+section {
+  width: 90%;
+}
+
+.center-block {
+  display: block;
+  margin: auto;
+}
