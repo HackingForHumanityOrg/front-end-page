@@ -1,5 +1,18 @@
+.center-block {
+  display: block;
+  margin: auto;
+}
+
 header {
   text-align: center;
+}
+
+#banner {
+  background-color: grey;
+  height: 10em;
+  padding: 10px;
+  margin-bottom: 5%;
+  width: 100%;
 }
 
 form {
@@ -7,10 +20,28 @@ form {
 }
 
 section {
-  width: 90%;
+  float: left;
+  width: 60%;
 }
 
-.center-block {
-  display: block;
-  margin: auto;
+article {
+  margin-bottom: 5%;
+}
+
+#search-engine {
+  float: left;
+  width: 60%;
+}
+
+#search-engine input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+}
+
+
+#login-register {
+  float: right;
+  width: 35%;
 }
