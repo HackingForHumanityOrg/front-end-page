@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
-import { Jumbotron, Well } from 'react-bootstrap';
 
 class LocationList extends Component {
   constructor(props) {
     super(props);
-    this.state = {location: []};
+    this.state = {
+      address: '',
+      service: '',
+      time: '',
+      email: '',
+      password: '',
+      list: []
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -17,38 +26,59 @@ class LocationList extends Component {
     }).then(res => {
       return res.json()
     }).then (data => {
-      this.setState({location: data})
+      this.setState({list: data})
     }).catch(e => {
-      this.setState({location: 'Request Failed: ' + e})
+      this.setState({list: 'Request Failed: ' + e})
     });
   }
 
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('Attempt to login as ' + this.state.email);
+    event.preventDefault();
+  }
+
   render() {
-    const locations = this.state.location.map((item, i) => {
+    // variable holding the location list
+    const lists = this.state.list.map((item, i) => {
       return (
-        <Well key={i}>
+        <article key={i}>
           <h3>{item.facility_name}</h3>
-          <span>{item.facility_type}</span>
-        </Well>)
+          <p>{item.facility_type} | {item.services}</p>
+          <address>
+            {item.location_address}
+            {item.location_city}
+            {item.location_state}
+          </address>
+        </article>)
     });
 
+    // actual output
     return (
       <main>
-        <Header />
-        <section>{ locations }</section>
+        <div id="banner">
+          <section id="search-engine">
+          <form>
+            <input type="text" name="address" value={this.state.address} placeholder="San Francisco..." onChange={this.handleChange} />
+            <input type="text" name="service" value={this.state.service} placeholder="All services..." onChange={this.handleChange} />
+            <input type="text" name="time" value={this.state.time} placeholder="Any day..." onChange={this.handleChange} />
+          </form>
+          </section>
+          <section id="login-register">
+            <form onSubmit={this.handleSubmit} >
+              <input type="text" name="email" value={this.state.email} placeholder="E-mail address"/>
+              <input type="text" name="password" value={this.state.password} placeholder="Password"/>
+              <input type="submit" value="Submit" />
+            </form>
+          </section>
+        </div>
+        <section>{ lists }</section>
       </main>
     );
   }
 }
-
-function Header() {
-  return (
-    <div id="banner">
-      <section id="search-engine">Test</section>
-      <section id="login-register">Test</section>
-    </div>
-  );
-}
-
 
 export default LocationList;
