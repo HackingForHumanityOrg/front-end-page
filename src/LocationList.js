@@ -101,29 +101,17 @@ class LocationList extends Component {
   }
 }
 
-  // getCoord(props) {
-  //   if(props) {
-  //     alert(props);
-  //     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address={props.location_address},+{props.location_city},+CA&key=AIzaSyAxlxK_wU7C93Kmi3MVfMmKK-B-Y1j4VtQ`, {
-  //       method: 'GET',
-  //     }).then(res => {
-  //       return res.json()
-  //     }).then (data => {
-  //       this.setState({coord: data})
-  //     }).catch(e => {
-  //       this.setState({coord: 'Request Failed: ' + e})
-  //     });
-  //   }
-  // }
 
-const coords = {
-  lat: 37.679778,
-  lng: -122.474415
-};
+
+
 const params = {v: '3.exp', key: 'AIzaSyD59dtHfFywOZus15LH00c45khguXs99nM'};
 class GoogleMap extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      lat: 37.679778,
+      lng: -122.474415
+    }
   }
 
   onMapCreated(map) {
@@ -140,42 +128,45 @@ class GoogleMap extends Component {
   onClick(e) {
     console.log('onClick', e);
   }
+
   render() {
-    console.log(this.props);
+    // if(this.props.coordinates) {
+    //       return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address={props.location_address},+{props.location_city},+CA&key=AIzaSyAxlxK_wU7C93Kmi3MVfMmKK-B-Y1j4VtQ`, {
+    //         method: 'GET',
+    //       }).then(res => {
+    //         return res.json()
+    //       }).then (data => {
+    //         alert(data)
+    //       });
+    // }
     return (
       <Gmaps
         width={'400px'}
         height={'500px'}
-        lat={coords.lat}
-        lng={coords.lng}
+        lat={this.state.lat}
+        lng={this.state.lng}
         zoom={12}
         loadingMessage={'Loading map...'}
         params={params}
         onMapCreated={this.onMapCreated}>
         <Marker
-          lat={coords.lat}
-          lng={coords.lng}
+          lat={this.state.lat}
+          lng={this.state.lng}
           draggable={true}
           onDragEnd={this.onDragEnd} />
         <InfoWindow
-          lat={coords.lat}
-          lng={coords.lng}
+          lat={this.state.lat}
+          lng={this.state.lng}
           content={this.props.coordinates.facility_name || "Free Clinic"}
           onCloseClick={this.onCloseClick} />
         <Circle
-          lat={coords.lat}
-          lng={coords.lng}
+          lat={this.state.lat}
+          lng={this.state.lng}
           radius={500}
           onClick={this.onClick} />
       </Gmaps>
     );
   }
 }
-
-GoogleMap.defaultProps = {
-  coordinates: {
-    facility_name: "Free Clinic",
-  }
-};
 
 export default LocationList;
