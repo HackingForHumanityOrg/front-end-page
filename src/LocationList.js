@@ -66,11 +66,10 @@ class LocationList extends Component {
       return (
         <article key={i} onClick={()=>this.handleRequest(item)} value={item}>
           <h3>{item.facility_name}</h3>
-          <p>{item.facility_type} | {item.services}</p>
+          <p className="info">{item.facility_type} | {item.services}</p>
           <address>
-            {item.location_address}
-            {item.location_city}
-            {item.location_state}
+            <p>{item.location_address}</p>
+            <p>{item.location_city}, {item.location_state}</p>
           </address>
         </article>)
     });
@@ -101,44 +100,52 @@ class LocationList extends Component {
   }
 }
 
-
-
-
-const params = {v: '3.exp', key: 'AIzaSyD59dtHfFywOZus15LH00c45khguXs99nM'};
 class GoogleMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
       lat: 37.679778,
-      lng: -122.474415
+      lng: -122.474415,
+      updated: false,
+    }
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      updated: false,
+    });
+  }
+
+  componentDidUpdate() {
+    this.getMap();
+  }
+
+  getMap() {
+    if (!this.state.updated) {
+      return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.props.coordinates.location_address},+${this.props.coordinates.location_city},+CA&key=${process.env.REACT_APP_MAP_API}`, {
+        method: 'GET',
+      }).then(res => {
+        return res.json()
+      }).then (data => {
+        this.setState({
+          lat: data.results[0].geometry.location.lat,
+          lng: data.results[0].geometry.location.lng,
+          updated: true,
+        });
+        return data;
+      })
     }
   }
 
   onMapCreated(map) {
     map.setOptions({
       disableDefaultUI: true
-    });
-  }
-  onDragEnd(e) {
-    console.log('onDragEnd', e);
-  }
-  onCloseClick() {
-    console.log('onCloseClick');
-  }
-  onClick(e) {
-    console.log('onClick', e);
+    })
   }
 
   render() {
-    // if(this.props.coordinates) {
-    //       return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address={props.location_address},+{props.location_city},+CA&key=AIzaSyAxlxK_wU7C93Kmi3MVfMmKK-B-Y1j4VtQ`, {
-    //         method: 'GET',
-    //       }).then(res => {
-    //         return res.json()
-    //       }).then (data => {
-    //         alert(data)
-    //       });
-    // }
+    const params = {v: '3.exp', key: process.env.REACT_APP_MAP_API};
+
     return (
       <Gmaps
         width={'400px'}
@@ -147,25 +154,21 @@ class GoogleMap extends Component {
         lng={this.state.lng}
         zoom={12}
         loadingMessage={'Loading map...'}
-        params={params}
-        onMapCreated={this.onMapCreated}>
+        params={params}>
         <Marker
           lat={this.state.lat}
           lng={this.state.lng}
-          draggable={true}
-          onDragEnd={this.onDragEnd} />
+          draggable={true} />
         <InfoWindow
           lat={this.state.lat}
           lng={this.state.lng}
-          content={this.props.coordinates.facility_name || "Free Clinic"}
-          onCloseClick={this.onCloseClick} />
+          content={this.props.coordinates.facility_name || "Click listing to locate free clinic"} />
         <Circle
           lat={this.state.lat}
           lng={this.state.lng}
-          radius={500}
-          onClick={this.onClick} />
+          radius={500} />
       </Gmaps>
-    );
+    )
   }
 }
 

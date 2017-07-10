@@ -5,6 +5,7 @@
   "dependencies": {
     "babel-loader": "^7.1.1",
     "babel-preset-react": "^6.24.1",
+    "dotenv": "^4.0.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",

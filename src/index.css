@@ -95,7 +95,7 @@ width: 100%;
 #login-register input[type=submit] {
   background: #FF52A5;
   font-family: 'Lota', serif;
-    color: #ffffff;
+  color: #ffffff;
   letter-spacing: 0.25px;
   border: none;
   margin-bottom: 5%;
@@ -109,14 +109,19 @@ width: 100%;
 
 #list article {
   background: #FFFFFF;
-box-shadow: 5px 3px 5px 0 rgba(137,137,137,0.50);
-font-family: 'Arvo', serif;
-color: #4A4A4A;
+  box-shadow: 5px 3px 5px 0 rgba(137,137,137,0.50);
+  font-size: 18px;
+  font-family: 'Lota', serif;
+  color: #4A4A4A;
   clear: both;
   height: auto;
   margin: 3% 5%;
   overflow:hidden;
   padding: 2%;
+}
+
+#list article:hover, #list article:active {
+  background-color: #FF52A5;
 }
 
 #list article h3 {
@@ -126,21 +131,15 @@ color: #4A4A4A;
   display: inline;
 }
 
-#list article p {
- font-size: 18px;
- font-family: 'Lota', serif;
- color: #4A4A4A;
- float: left;
- width: 70%;
+#list article .info {
+  float: left;
+  width: 65%;
 }
 
 #list article address {
-  font-size: 18px;
-  font-family: 'Lota', serif;
-  color: #4A4A4A;
   float: right;
   padding-top: 1%;
-  width: 25%;
+  width: 30%;
 }
 
 #map {
